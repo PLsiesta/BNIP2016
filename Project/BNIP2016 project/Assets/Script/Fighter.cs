@@ -5,7 +5,6 @@ public class Fighter : UnitBase {
 
     float m_Width;
     float m_Hight;
-    public Vector3 m_MoveSize;
     bool m_Alive;
 	// Use this for initialization
 	void Start () {
@@ -16,23 +15,32 @@ public class Fighter : UnitBase {
 	
 	// Update is called once per frame
 	void Update () {
-        if (m_Alive)
+        int a = 10;
+        m_PrevPosition = transform.position;
+
+        if (m_Hp > 0)
         {
-            if (transform.position.x < -7 || transform.position.x > 7)
-                m_MoveSize.x *= -1;
-            transform.Translate(m_MoveSize);
+            transform.position += m_MoveSpeed * Time.deltaTime;
+            if (transform.position.x <= -7 || transform.position.x >= 7)
+            {
+                transform.position = m_PrevPosition;
+                m_MoveSpeed.x *= -1;
+            }
         }
         else
         {
             transform.parent.SendMessage("Death");
         }
+
 	}
 
     void OnTriggerEnter(Collider Coll)
     {
         if (Coll.tag == "Bullet")
         {
-            m_Alive = false;
+            float DPS = Coll.GetComponent<BulletData>().GetDPS();
+            m_Hp -= DPS;
+            Destroy(Coll.gameObject);
         }
         
     }

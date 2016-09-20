@@ -9,8 +9,6 @@ public class Enemy : UnitBase {
 
 	// Use this for initialization
 	void Start () {
-        GameObject tmp = (GameObject)Instantiate(m_EnemyPrefab, transform.position, Quaternion.identity);
-        tmp.transform.parent = transform;
         m_Head = false;
 	}
 	
@@ -18,6 +16,7 @@ public class Enemy : UnitBase {
 	void Update () {
         if (m_Head && m_ShotPossible)
             Fire();
+        m_PrevPosition = transform.position;
 	}
 
     void OnHead()

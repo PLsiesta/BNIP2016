@@ -1,13 +1,32 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+
+public enum UNIT_TYPE
+{
+    FIGHTER,
+    GALAGA
+}
+
 public class UnitBase : MonoBehaviour {
 
+
     public GameObject BulletObj;
+    protected Vector3 m_PrevPosition;
+    protected bool  m_ShotPossible;
     [SerializeField]
-    protected bool m_ShotPossible;
+    protected float m_ShotRate;
     [SerializeField]
-    protected float m_ShotRate; 
+    protected float m_Hp;
+    [SerializeField]
+    protected float m_BulletDPS;
+    [SerializeField]
+    protected Vector3 m_BulletSpeed;
+    [SerializeField]
+    protected Vector3 m_MoveSpeed;
+    [SerializeField]
+    protected UNIT_TYPE m_UnitType; 
+
 
 	// Use this for initialization
 	void Start () {
@@ -21,7 +40,8 @@ public class UnitBase : MonoBehaviour {
 
     protected void Fire()
     {
-        Instantiate(BulletObj, transform.position, BulletObj.transform.rotation);
+        GameObject tmpBullet = (GameObject)Instantiate(BulletObj, transform.position, BulletObj.transform.rotation);
+        tmpBullet.GetComponent<BulletData>().SetData(m_BulletSpeed, m_BulletDPS, m_UnitType);
         m_ShotPossible = false;
     }
 
@@ -29,6 +49,13 @@ public class UnitBase : MonoBehaviour {
     {
         if (m_ShotRate > Random.Range(0.0f, 10.0f))
             m_ShotPossible = true;
+    }
+
+    public float GetHp()
+    {
+
+       return m_Hp;
+    
     }
 
 }

@@ -1,10 +1,12 @@
 fileFormatVersion: 2
 guid: 10790d92d78b9ad44a9c72aba90511db
-timeCreated: 1473880162
+timeCreated: 1474221863
 licenseType: Free
 MonoImporter:
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - BulletObj: {fileID: 164736, guid: 8d3619f5e22ef524ba059e774355d98f, type: 2}
+  - m_EnemyPrefab: {instanceID: 0}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 
