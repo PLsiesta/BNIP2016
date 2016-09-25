@@ -29,11 +29,13 @@ public class CheckTraffic : MonoBehaviour
 
     public bool GetOnTraffic()
     {
-        return m_OnTraffic;
+        bool tmpFlag = m_OnTraffic;
+        m_OnTraffic = false;
+        return tmpFlag;
     }
 
-    public void ResetOnTraffic()
-    {
-        m_OnTraffic = false;
-    }
+    //public void ResetOnTraffic()
+    //{
+    //    m_OnTraffic = false;
+    //}
 }

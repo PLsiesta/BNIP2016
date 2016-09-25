@@ -25,11 +25,11 @@ public class MiddleManagement : MonoBehaviour {
 // 初期化
 ////////////////////////////////////
 	void Start () {
-        Children = new GameObject[3];
-            for (int nNum = 0; nNum < 3; nNum++)
+        Children = new GameObject[5];
+            for (int nNum = 0; nNum < 5; nNum++)
             {
                 Children[nNum] = (GameObject)Instantiate(GalagaList[nNum],
-                            new Vector3(transform.position.x, transform.position.y, transform.position.z - nNum * 3),
+                            new Vector3(transform.position.x, transform.position.y, transform.position.z - nNum * 1.5f),
                             GalagaList[nNum].transform.rotation);
                 Children[nNum].transform.parent = transform;
             }
@@ -51,17 +51,20 @@ public class MiddleManagement : MonoBehaviour {
     {
         float Z = -100;
         int HeadNumber = -1;
-        for (int nCnt = 0; nCnt < 3; nCnt++)
+        for (int nCnt = 0; nCnt < transform.childCount; nCnt++)
         {
+            if (Children[nCnt] != null)
                 if (Z < Children[nCnt].transform.position.z)
                 {
                     Z = Children[nCnt].transform.position.z;
                     HeadNumber = nCnt;
                 }
         }
-        HeadObj = Children[HeadNumber];
-        Children[HeadNumber].SendMessage("OnHead");
-    
+        if (HeadNumber != -1)
+        {
+            HeadObj = Children[HeadNumber];
+            Children[HeadNumber].SendMessage("OnHead");
+        }
     }
 
 /////////////////////////////////////
@@ -71,8 +74,9 @@ public class MiddleManagement : MonoBehaviour {
     {
         if (CheckPoint.GetComponent<CheckTraffic>().GetOnTraffic())
         {
+            if(HeadObj != null)
             HeadObj.SendMessage("ShotRateCalculation");
-            CheckPoint.GetComponent<CheckTraffic>().ResetOnTraffic();
+            //CheckPoint.GetComponent<CheckTraffic>().ResetOnTraffic();
         }
     }
 }

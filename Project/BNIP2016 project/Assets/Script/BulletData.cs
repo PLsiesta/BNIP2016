@@ -3,7 +3,7 @@ using System.Collections;
 
 public class BulletData : MonoBehaviour {
 
-    float m_Speed;
+    Vector3 m_Speed;
     float m_DPS;
     UNIT_TYPE m_Type;
 	// Use this for initialization
@@ -13,6 +13,11 @@ public class BulletData : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+        if (transform.position.z > 14.0f || transform.position.z < -20.0f)
+            Destroy(gameObject);
+        Vector3 tmpSpeed = m_Speed * Time.deltaTime;
+        transform.Translate(transform.TransformDirection(tmpSpeed.x, tmpSpeed.y, tmpSpeed.z));
+
 	
 	}
 
@@ -20,9 +25,9 @@ public class BulletData : MonoBehaviour {
     {
 
         if (Type == UNIT_TYPE.FIGHTER)
-            Speed = new Vector3(Speed.x, Speed.y, Mathf.Abs(Speed.z) * -1);
+            m_Speed = new Vector3(Speed.x, Speed.y, Mathf.Abs(Speed.z));
         else
-            Speed = new Vector3(Speed.x, Speed.y, Mathf.Abs(Speed.z));
+            m_Speed = new Vector3(Speed.x, Speed.y, Mathf.Abs(Speed.z) * -1);
         
         m_DPS = DPS;
     }
